@@ -9,14 +9,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'https://cine-verse-b8832aa84c3e.herokuapp.com/';
-
-type userDetails = {
-  UserName: string;
-  Email: string;
-  Password: string;
-  Birthdate: Date;
-};
+const apiUrl = 'https://cine-verse-b8832aa84c3e.herokuapp.com';
 
 // Service to handle errors and extract response data
 export class ErrorAndResponseService {
@@ -54,15 +47,19 @@ export class UserRegistrationService extends ErrorAndResponseService {
     super(http); // Call the constructor of the ErrorAndResponseService class
   }
   // Making the api call for the user registration endpoint
-  public userRegistration(userDetails: userDetails): Observable<any> {
+  public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
 
     // Make a POST request to the user registration endpoint
     return this.http
-      .post(apiUrl + 'users', userDetails)
+      .post(apiUrl + '/users', userDetails)
       .pipe(catchError(this.handleError), map(this.extractResponseData));
   }
 }
+
+@Injectable({
+  providedIn: 'root',
+})
 
 // USER LOGIN
 export class UserLoginService extends ErrorAndResponseService {
@@ -70,14 +67,10 @@ export class UserLoginService extends ErrorAndResponseService {
     super(http);
   }
   public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
-
-    const token = localStorage.getItem('token');
-
     return this.http
-      .post(apiUrl + 'login', userDetails, {
+      .post(apiUrl + '/login', userDetails, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          'Content-Type': 'application/json',
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -93,7 +86,7 @@ export class AllMoviesService extends ErrorAndResponseService {
     const token = localStorage.getItem('token');
 
     return this.http
-      .get(apiUrl + 'movies', {
+      .get(apiUrl + '/movies', {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
