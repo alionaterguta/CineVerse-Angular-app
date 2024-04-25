@@ -1,0 +1,66 @@
+<mat-toolbar color="primary">
+  <span>CINE VERSE</span>
+  <span class="spacer"></span>
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search for a movie" />
+    <button class="search-button">
+      <i class="material-icons">search</i>
+    </button>
+  </div>
+
+  <span class="spacer"></span>
+  <button mat-button [matMenuTriggerFor]="menu">My Profile</button>
+  <button mat-button [matMenuTriggerFor]="menu">Logout</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Profile</button>
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
+</mat-toolbar>
+
+<div class="movie-grid" (scroll)="updateArrowVisibility($event.target)">
+  <button class="arrow prev" (click)="scroll(-1)" *ngIf="showLeftArrow">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <mat-card *ngFor="let movie of movies; let i = index">
+    <mat-dialog-content>
+      <mat-card-header>
+        <mat-card-title>{{ movie.Title }}</mat-card-title>
+        <mat-card-subtitle>Directed by: {{ movie.Director }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ movie.Genre }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <img
+        mat-card-image
+        src="{{ movie.ImgPath }}"
+        alt="{{ movie.Title }}"
+        width="{{ 300 }}"
+      />
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="openDirectorDialog(movie)">
+          Director
+        </button>
+        <button mat-button color="primary" (click)="openSynopsisDialog(movie)">
+          Synopsis
+        </button>
+        <button
+          mat-icon-button
+          (click)="
+            isFavorite(movie)
+              ? delTitleToFavorites(movie)
+              : addTitleToFavorites(movie)
+          "
+        >
+          <mat-icon>{{
+            isFavorite(movie) ? "favorite" : "favorite_border"
+          }}</mat-icon>
+        </button>
+        <!-- <button mat-button (click)="addTitleToFavorites(movie)">
+          favorite_border
+        </button> -->
+      </mat-card-actions>
+    </mat-dialog-content>
+  </mat-card>
+  <button class="arrow next" (click)="scroll(1)" *ngIf="showRightArrow">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>
