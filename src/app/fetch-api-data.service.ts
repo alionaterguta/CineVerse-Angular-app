@@ -11,6 +11,9 @@ import { map, catchError } from 'rxjs/operators';
 //Declaring the api url that will provide data for the client app
 const apiUrl = 'https://cine-verse-b8832aa84c3e.herokuapp.com';
 
+@Injectable({
+  providedIn: 'root',
+})
 // Service to handle errors and extract response data
 export class ErrorAndResponseService {
   constructor(protected http: HttpClient) {}
@@ -27,7 +30,7 @@ export class ErrorAndResponseService {
       );
     }
     // Return an observable with an error message
-    const err = new Error('Something went wrong; please try again later.');
+    const err = new Error('Something went wrong, please try again later.');
     throwError(() => err);
   }
   protected extractResponseData(res: any): any {
@@ -77,21 +80,32 @@ export class UserLoginService extends ErrorAndResponseService {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 // GET ALL MOVIES
 export class AllMoviesService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
     super(http);
   }
   public getAllMovies(): Observable<any> {
-    const token = localStorage.getItem('token');
+    // Check if localStorage is available before accessing it
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
 
-    return this.http
-      .get(apiUrl + '/movies', {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
-      })
-      .pipe(map(this.extractResponseData), catchError(this.handleError));
+      return this.http
+        .get(apiUrl + '/movies', {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + token,
+          }),
+        })
+        .pipe(map(this.extractResponseData), catchError(this.handleError));
+    } else {
+      console.error('localStorage is not available in this environment.');
+      return throwError(
+        () => new Error('localStorage is not available in this environment.')
+      );
+    }
   }
 }
 
@@ -148,16 +162,19 @@ export class MoviesByDirectorService extends ErrorAndResponseService {
   }
 }
 
-// GET DIRECTORS
+@Injectable({
+  providedIn: 'root',
+})
+// GET DIRECTOR
 export class DirectorService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
     super(http);
   }
-  public getDirectors(): Observable<any> {
+  public getDirector(name: string): Observable<any> {
     const token = localStorage.getItem('token');
 
     return this.http
-      .get(apiUrl + '/movies/directors', {
+      .get(apiUrl + '/movies/director/' + name, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -166,20 +183,27 @@ export class DirectorService extends ErrorAndResponseService {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 // ADD == POST MOVIE TO FAVORITE LIST
 export class AddFavoriteMovieService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
     super(http);
   }
 
-  public addFavoriteMovie(username: string, title: string): Observable<any> {
+  public addFavoriteMovie(title: string): Observable<any> {
     const token = localStorage.getItem('token');
+    const { UserName } = JSON.parse(
+      localStorage.getItem('currentUser') || '{}'
+    );
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+    });
 
     return this.http
-      .post(apiUrl + '/users/' + username + '/movies/' + title, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
+      .post(apiUrl + '/users/' + UserName + '/movies/' + title, null, {
+        headers,
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
@@ -225,6 +249,9 @@ export class DeleteUserService extends ErrorAndResponseService {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 // UPDATE USER BY USERNAME
 export class UpdateInfoUserService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
@@ -243,6 +270,9 @@ export class UpdateInfoUserService extends ErrorAndResponseService {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 // GET USER LIST
 export class UserListService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
@@ -250,6 +280,9 @@ export class UserListService extends ErrorAndResponseService {
   }
   public getUserList(): Observable<any> {
     const token = localStorage.getItem('token');
+    // const { UserName } = JSON.parse(
+    //   localStorage.getItem('currentUser') || '{}'
+    // );
 
     return this.http
       .get(apiUrl + '/users', {
