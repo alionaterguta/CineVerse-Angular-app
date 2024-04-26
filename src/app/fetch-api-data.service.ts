@@ -208,28 +208,33 @@ export class AddFavoriteMovieService extends ErrorAndResponseService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 }
-
+@Injectable({
+  providedIn: 'root',
+})
 // DELETE MOVIE FROM FAVORITE LIST
 export class RemoveFavoriteMovieService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
     super(http);
   }
-
-  public removeMovieFromFavorites(
-    username: string,
-    title: string
-  ): Observable<any> {
+  public removeMovieFromFavorites(title: string): Observable<any> {
     const token = localStorage.getItem('token');
-
+    const { UserName } = JSON.parse(
+      localStorage.getItem('currentUser') || '{}'
+    );
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+    });
     return this.http
-      .delete(apiUrl + '/users/' + username + '/movies/' + title, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
+      .delete(apiUrl + '/users/' + UserName + '/movies/' + title, {
+        headers,
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 }
+
+@Injectable({
+  providedIn: 'root',
+})
 // DELETE USER
 export class DeleteUserService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
@@ -257,15 +262,20 @@ export class UpdateInfoUserService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
     super(http);
   }
-  public updateInfoUser(username: string, userData: any): Observable<any> {
+  public updateInfoUser(userData: any): Observable<any> {
     const token = localStorage.getItem('token');
+    const { UserName } = JSON.parse(
+      localStorage.getItem('currentUser') || '{}'
+    );
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+    });
 
     return this.http
-      .put(apiUrl + '/users/' + username, userData, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
+      .put(apiUrl + '/users/' + UserName, userData, {
+        headers,
       })
+
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 }
