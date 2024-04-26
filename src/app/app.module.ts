@@ -27,13 +27,17 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { UpdateUserFormComponent } from './update-user-form/update-user-form.component';
 import { DirectorInfoComponent } from './director-info/director-info.component';
 import { SynopsisComponent } from './synopsis/synopsis.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
   { path: 'profile', component: ProfilePageComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
+  { path: 'profile', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
 @NgModule({
@@ -47,6 +51,8 @@ const appRoutes: Routes = [
     UpdateUserFormComponent,
     DirectorInfoComponent,
     SynopsisComponent,
+    DeleteUserComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -64,7 +70,8 @@ const appRoutes: Routes = [
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
-    FlexLayoutModule,
+    MatTabsModule,
+    // FlexLayoutModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
