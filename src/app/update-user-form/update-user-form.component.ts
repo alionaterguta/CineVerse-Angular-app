@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { UpdateInfoUserService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -18,29 +17,24 @@ export class UpdateUserFormComponent implements OnInit {
   };
   constructor(
     public fetchApiData: UpdateInfoUserService,
-    public dialogRef: MatDialogRef<UpdateUserFormComponent>,
     public snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {}
 
   updateUser(): void {
-    this.fetchApiData.updateInfoUser(this.UserName, this.userData).subscribe(
-      (result) => {
-        console.log(result);
-        this.dialogRef.close();
-        this.snackBar.open('Update successful', 'OK', {
+    this.fetchApiData.updateInfoUser(this.userData).subscribe(
+      (resp: any) => {
+        this.userData = resp;
+        console.log(resp);
+        this.snackBar.open('Update', 'Success', {
           duration: 2000,
         });
       },
-      (result) => {
-        this.snackBar.open(
-          'Update not successful, please try again',
-          'NOT OK',
-          {
-            duration: 2000,
-          }
-        );
+      () => {
+        this.snackBar.open('Please try again', 'No success', {
+          duration: 2000,
+        });
       }
     );
   }
