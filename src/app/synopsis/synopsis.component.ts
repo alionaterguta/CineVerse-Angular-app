@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+/**
+ * Represents a dialog component displaying movie synopsis.
+ */
 @Component({
   selector: 'app-synopsis',
   templateUrl: './synopsis.component.html',
@@ -9,7 +11,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class SynopsisComponent {
   movie: any;
 
-  // Use MAT_DIALOG_DATA to inject the data passed from the dialog opening, and then assign it to the movie property.
+  /**
+   * Initializes the SynopsisComponent.
+   * @param {MatDialogRef<SynopsisComponent>} dialogRef - Reference to the dialog.
+   * @param {any} data - Data injected into the dialog.
+   */
   constructor(
     public dialogRef: MatDialogRef<SynopsisComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

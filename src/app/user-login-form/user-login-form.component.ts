@@ -3,7 +3,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UserLoginService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+/**
+ * Represents a component for user login form.
+ */
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
@@ -14,15 +16,26 @@ export class UserLoginFormComponent implements OnInit {
     UserName: '',
     Password: '',
   };
+  /**
+   * Initializes the UserLoginFormComponent.
+   * @param {UserLoginService} fetchApiData - Service for user login.
+   * @param {MatDialogRef<UserLoginFormComponent>} dialogRef - Reference to the dialog.
+   * @param {MatSnackBar} snackBar - Angular Material's MatSnackBar service.
+   * @param {Router} router - Angular's Router service for navigation.
+   */
   constructor(
     public fetchApiData: UserLoginService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     public snackBar: MatSnackBar,
     private router: Router
   ) {}
-
+  /**
+   * Angular lifecycle hook called after component initialization.
+   */
   ngOnInit(): void {}
-
+  /**
+   * Logs in the user.
+   */
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe(
       (result) => {
