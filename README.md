@@ -37,6 +37,28 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - Run the comand for a dev server and navigate to `http://localhost:8080/`. The application will automatically reload if you change any of the source files.
 
-       ng serve --port 8080`
+       ng serve --port 8080
 
 ## Deployment
+
+Deploy your application to GitHub Pages.
+
+- Create a new repository on GitHub
+
+- In your terminal, run this command (replace `username` and `repository-name` with your data):
+
+       git remote add origin https://github.com/<GitHub-username>/<repository-name>.git
+
+- Add angular-cli-ghpages by running
+
+       ng add angular-cli-ghpages
+
+- To build your application, run the command (replace <repository-name> with your own repository name)
+
+       ng deploy --base-href=/<repository-name>/
+
+- The URL of your application will be then `https://<GitHub-username>.github.io/<repository-name>/`
+
+Whenever you make any changes to your application's code, all you need to do is run the command:
+
+       ng deploy --base-href=/<repository-name>/
