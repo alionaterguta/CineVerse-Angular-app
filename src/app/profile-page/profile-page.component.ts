@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DirectorInfoComponent } from '../director-info/director-info.component';
 import { SynopsisComponent } from '../synopsis/synopsis.component';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { Router } from '@angular/router';
 import {
   AllMoviesService,
@@ -53,16 +54,6 @@ export class ProfilePageComponent implements OnInit {
       data: { directorName: movie.Director },
       width: '600px',
     });
-  }
-
-  navigateToMovies(): void {
-    this.router.navigate(['/movies']);
-  }
-  navigateToWelcome(): void {
-    this.router.navigate(['/welcome']);
-  }
-  isOnProfileRoute(): boolean {
-    return this.router.url === '/profile';
   }
 
   getMovies(): void {

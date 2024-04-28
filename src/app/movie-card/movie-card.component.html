@@ -1,21 +1,4 @@
-<mat-toolbar color="primary">
-  <span>CINE VERSE</span>
-  <span class="spacer"></span>
-
-  <!-- search bar commented for a later implementation -->
-
-  <!-- <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search for a movie" />
-    <button class="search-button">
-      <i class="material-icons">search</i>
-    </button>
-  </div> -->
-
-  <span class="spacer"></span>
-  <button mat-button [class.active]="isOnMoviesRoute()">Movies</button>
-  <button mat-button (click)="navigateToProfile()">My Profile</button>
-  <button mat-button (click)="navigateToWelcome()">Logout</button>
-</mat-toolbar>
+<app-toolbar></app-toolbar>
 
 <div class="movie-grid" (scroll)="updateArrowVisibility($event.target)">
   <button class="arrow prev" (click)="scroll(-1)" *ngIf="showLeftArrow">

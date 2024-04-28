@@ -56,15 +56,6 @@ export class MovieCardComponent implements OnInit {
     this.getMovies();
     this.getUsers();
   }
-  isOnMoviesRoute(): boolean {
-    return this.router.url === '/movies';
-  }
-  navigateToProfile(): void {
-    this.router.navigate(['/profile']);
-  }
-  navigateToWelcome(): void {
-    this.router.navigate(['/welcome']);
-  }
 
   getMovies(): void {
     this.fetchMovies.getAllMovies().subscribe((resp: any) => {

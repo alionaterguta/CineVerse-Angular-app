@@ -1,11 +1,4 @@
-<mat-toolbar color="primary">
-  <span>CINE VERSE</span>
-  <span class="spacer"></span>
-  <span class="spacer"></span>
-  <button mat-button (click)="navigateToMovies()">Movies</button>
-  <button mat-button [class.active]="isOnProfileRoute()">My Profile</button>
-  <button mat-button (click)="navigateToWelcome()">Logout</button>
-</mat-toolbar>
+<app-toolbar></app-toolbar>
 
 <h1>
   Hello <span class="userName">{{ UserName }}!</span>
