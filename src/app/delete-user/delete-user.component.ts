@@ -26,6 +26,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
  * @param {MatDialog} dialog - Angular Material's MatDialog service for opening dialogs.
  */
 export class DeleteUserComponent {
+  _id = '';
   constructor(
     private delUser: DeleteUserService,
     public snackBar: MatSnackBar,
@@ -43,23 +44,22 @@ export class DeleteUserComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.deleteUserData(result); // If the user confirms, proceed with deletion
+        this.deleteUserData(); // If the user confirms, proceed with deletion
       }
     });
   }
   /**
    * Deletes the user data.
-   * @param {string} id - The ID of the user to be deleted.
+   * @param {string} _id - The ID of the user to be deleted.
    */
-  deleteUserData(id: string): void {
-    this.delUser.deleteUser(id).subscribe((resp: any) => {
+  deleteUserData(): void {
+    this.delUser.deleteUser().subscribe((resp: any) => {
       this.delUser = resp;
-
       console.log(resp);
-      this.router.navigate(['/welcome']);
     });
     this.snackBar.open('Account deleted', 'Success', {
       duration: 2000,
     });
+    this.router.navigate(['/welcome']);
   }
 }
