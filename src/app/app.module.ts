@@ -30,6 +30,7 @@ import { SynopsisComponent } from './synopsis/synopsis.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
 const appRoutes: Routes = [
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
     SynopsisComponent,
     DeleteUserComponent,
     ConfirmationDialogComponent,
+    ToolbarComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
