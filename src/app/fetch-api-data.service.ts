@@ -241,14 +241,16 @@ export class DeleteUserService extends ErrorAndResponseService {
     super(http);
   }
 
-  public deleteUser(id: string): Observable<any> {
+  public deleteUser(): Observable<any> {
     const token = localStorage.getItem('token');
+    const { _id } = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+    });
     return this.http
-      .delete(apiUrl + '/users/' + id, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
+      .delete(apiUrl + '/users/' + _id, {
+        headers,
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
