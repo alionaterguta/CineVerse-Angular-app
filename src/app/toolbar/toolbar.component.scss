@@ -7,6 +7,7 @@
 .spacer {
   flex: 1;
 }
+
 // Applying a line to the button
 button {
   position: relative; /* Position relative for absolute positioning of line */
@@ -28,6 +29,7 @@ button.active::after {
 button:hover::after {
   width: 100%; /* Expand line on hover */
 }
+
 // .search-container {
 //   position: relative;
 //   display: flex;
