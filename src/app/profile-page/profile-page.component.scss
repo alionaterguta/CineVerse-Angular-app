@@ -8,3 +8,18 @@ h1 {
   padding: 2px 4px;
   border-radius: 2px;
 }
+div {
+  display: flex;
+}
+.movie-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 40px;
+  margin: 20px;
+}
+.heart-icon {
+  flex-grow: 6;
+  text-align: end;
+}

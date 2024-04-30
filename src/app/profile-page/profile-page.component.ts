@@ -3,8 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DirectorInfoComponent } from '../director-info/director-info.component';
 import { SynopsisComponent } from '../synopsis/synopsis.component';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
+
 import {
   AllMoviesService,
   UserListService,
@@ -19,17 +19,14 @@ import {
 })
 export class ProfilePageComponent implements OnInit {
   movies: any[] = [];
-  users: any[] = [];
   favorites: any[] = [];
-  UserName: string = '';
+  username: string = '';
 
+  /**
+   * Lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
+   */
   ngOnInit(): void {
-    this.getMovies();
-    this.getUsers();
-    const { UserName } = JSON.parse(
-      localStorage.getItem('currentUser') || '{}'
-    );
-    this.UserName = UserName;
+    this.getFavMovies();
   }
 
   constructor(
@@ -38,10 +35,12 @@ export class ProfilePageComponent implements OnInit {
     public fetchMovies: AllMoviesService,
     public fetchUsers: UserListService,
     public addFavorite: AddFavoriteMovieService,
-    public removeFavorite: RemoveFavoriteMovieService,
-    private router: Router
+    public removeFavorite: RemoveFavoriteMovieService // private router: Router
   ) {}
 
+  /**
+   * Fetches all movies.
+   */
   openSynopsisDialog(movie: any): void {
     this.dialog.open(SynopsisComponent, {
       data: { movie }, // Pass the movie object to the dialog
@@ -49,6 +48,10 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a dialog to display director information.
+   * @param movie - The movie object.
+   */
   openDirectorDialog(movie: any): void {
     this.dialog.open(DirectorInfoComponent, {
       data: { directorName: movie.Director },
@@ -56,46 +59,59 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  getMovies(): void {
+  /**
+   * Fetches all movies and filters the favorites
+   */
+  getFavMovies(): void {
     this.fetchMovies.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
+      const { UserName, FavoriteMovies } = JSON.parse(
+        localStorage.getItem('currentUser') || '{}'
+      );
+      this.username = UserName;
+      this.favorites = this.movies.filter((movie) =>
+        FavoriteMovies.includes(movie.Title)
+      );
       return this.movies;
     });
   }
-  getUsers(): void {
-    const { UserName } = JSON.parse(
-      localStorage.getItem('currentUser') || '{}'
-    );
-    this.fetchUsers.getUserList().subscribe((resp: any) => {
-      this.users = resp;
-      const currentUser = this.users.filter(
-        (user) => user.UserName === UserName
-      );
-
-      this.favorites = currentUser[0].FavoriteMovies;
-    });
-  }
-
-  // filter through movies to check if a movie is in the favorite list
-  isFavorite(movie: any): boolean {
+  /**
+   * Function to determine if a movie is in the favorite list
+   * @param movie The movie object to check
+   * @returns A boolean indicating whether the movie is a favorite or a message if the favorite list is empty
+   */
+  isFavorite(movie: any): boolean | string {
+    // Filter through the favorite movies array to check if the given movie is present
     const favorite = this.favorites.filter((title) => title === movie.Title);
-    return favorite.length ? true : false;
+    // Check if the filtered array has any elements
+    if (favorite.length) {
+      // If the filtered array is not empty, the movie is a favorite, so return true
+      return true;
+    } else {
+      // If the filtered array is empty, there are no favorite movies, so return a message
+      return "Ups, you don't have any favorite movies. Go ahead and add some!";
+    }
   }
 
-  addTitleToFavorites(movie: any): void {
-    this.addFavorite.addFavoriteMovie(movie.Title).subscribe((resp: any) => {
-      console.log(resp);
-      this.snackBar.open('Movie added', 'Success', {
-        duration: 2000,
-      });
-    });
-  }
-
+  /**
+   * Removes a movie title from the user's favorite list.
+   * Updates the local storage and favorites array accordingly.
+   * @param movie The movie object to be removed from favorites.
+   */
   removeTitleFromFavorites(movie: any): void {
     this.removeFavorite
       .removeMovieFromFavorites(movie.Title)
       .subscribe((resp: any) => {
-        console.log(resp);
+        // Update FavoriteMovies in the local storage
+        const user = JSON.parse(localStorage.getItem('currentUser') || '');
+        user.FavoriteMovies = user.FavoriteMovies.filter(
+          (title: string) => title !== movie.Title
+        );
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        // Update the favorites array to reflect the favorite state without reloading the page
+        this.favorites = this.favorites.filter(
+          (favorite) => favorite.Title !== movie.Title
+        );
         this.snackBar.open('Movie removed', 'Success', {
           duration: 2000,
         });
