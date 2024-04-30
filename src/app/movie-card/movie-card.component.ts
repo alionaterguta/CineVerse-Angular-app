@@ -121,7 +121,6 @@ export class MovieCardComponent implements OnInit {
    */
   addTitleToFavorites(movie: any): void {
     this.addFavorite.addFavoriteMovie(movie.Title).subscribe((resp: any) => {
-      console.log(resp);
       // update FavoriteMovies in the local storage
       const user = JSON.parse(localStorage.getItem('currentUser') || '');
       user.FavoriteMovies.push(movie.Title);
@@ -143,8 +142,6 @@ export class MovieCardComponent implements OnInit {
     this.removeFavorite
       .removeMovieFromFavorites(movie.Title)
       .subscribe((resp: any) => {
-        console.log(resp);
-
         // update FavoriteMovies in the local storage
         const user = JSON.parse(localStorage.getItem('currentUser') || '');
         user.FavoriteMovies = user.FavoriteMovies.filter(

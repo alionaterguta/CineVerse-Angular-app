@@ -26,7 +26,6 @@ export class UpdateUserFormComponent implements OnInit {
     this.fetchApiData.updateInfoUser(this.userData).subscribe(
       (resp: any) => {
         this.userData = resp;
-        console.log(resp);
         this.snackBar.open('Update', 'Success', {
           duration: 2000,
         });

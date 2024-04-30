@@ -39,7 +39,6 @@ export class DirectorInfoComponent implements OnInit {
   getDirectorDetails(directorName: string): void {
     this.fetchDirector.getDirector(directorName).subscribe((resp: any) => {
       this.director = resp;
-      console.log('Director Details:', this.director);
       return this.director;
     });
   }

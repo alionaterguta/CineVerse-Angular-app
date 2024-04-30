@@ -55,7 +55,6 @@ export class DeleteUserComponent {
   deleteUserData(): void {
     this.delUser.deleteUser().subscribe((resp: any) => {
       this.delUser = resp;
-      console.log(resp);
     });
     this.snackBar.open('Account deleted', 'Success', {
       duration: 2000,
