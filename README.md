@@ -30,7 +30,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Getting Started
 
-- Clone this repository `https://github.com/alionaterguta/cineVerse-Angular-client.git`
+- Clone this repository `https://github.com/alionaterguta/CineVerse-Angular-client.git`
 - Install all the project dependencies:
 
        npm install
