@@ -12,5 +12,5 @@ export class AppComponent {
   /**
    * Title of the application.
    */
-  title = 'myFlix-Angular-client';
+  title = 'cineVerse-Angular-client';
 }
