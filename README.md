@@ -30,7 +30,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Getting Started
 
-- Clone this repository
+- Clone this repository `https://github.com/alionaterguta/cineVerse-Angular-client.git`
 - Install all the project dependencies:
 
        npm install
@@ -38,6 +38,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Run the comand for a dev server and navigate to `http://localhost:8080/`. The application will automatically reload if you change any of the source files.
 
        ng serve --port 8080
+
+- To read the documentation go to `doc/index.html` and open the html file in your browser.
 
 ## Deployment
 
