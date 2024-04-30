@@ -31,7 +31,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-// import { FlexLayoutModule } from '@angular/flex-layout';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -73,7 +72,6 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatMenuModule,
     MatTabsModule,
-    // FlexLayoutModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
