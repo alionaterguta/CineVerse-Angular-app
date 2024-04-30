@@ -1,34 +1,6 @@
-// .mat-form-field {
-//   flex-grow: 8;
-//   text-align: end;
-// }
-// mat-form-field.search-field {
-//   flex: 1;
-//   // max-width: 400px; /* Adjust the maximum width as needed */
-//   margin: 0 auto;
-//   // display: flex;
-
-//   text-align: center;
-// }
-// .mat-mdc-form-field-subscript-wrapper {
-//   align-items: unset !important; /* Reset vertical alignment */
-// }
-
-// .search-field {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
-// .search-field > mat-form-field {
-//   text-align: center;
-//   max-width: 400px;
-//   margin: 0;
-// }
-
 button.mat-icon-button {
   color: white; /* Change the icon color to match the toolbar */
 }
-
 // div {
 //   display: flex;
 // }
@@ -36,15 +8,19 @@ button.mat-icon-button {
   flex: 1 1 auto;
   justify-content: space-between;
 }
-.mat-icon-button {
+.heart-icon {
   flex-grow: 6;
   text-align: end;
+}
+.heart-icon::after {
+  flex-grow: 6;
+  text-align: end !important;
 }
 .movie-grid {
   display: flex;
   flex-wrap: nowrap; /* Prevent wrapping of movie cards */
   overflow-x: auto; /* Enable horizontal scrolling */
-  gap: 20px; /* Adjust the gap between cards */
+  gap: 10px; /* Adjust the gap between cards */
 }
 
 .movie-grid .arrow {

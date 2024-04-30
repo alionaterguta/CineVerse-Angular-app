@@ -1,9 +1,6 @@
 <app-toolbar></app-toolbar>
 
 <div class="movie-grid" (scroll)="updateArrowVisibility($event.target)">
-  <button class="arrow prev" (click)="scroll(-1)" *ngIf="showLeftArrow">
-    <mat-icon>keyboard_arrow_left</mat-icon>
-  </button>
   <mat-card *ngFor="let movie of movies; let i = index">
     <mat-dialog-content>
       <mat-card-header>
@@ -26,6 +23,7 @@
           Synopsis
         </button>
         <button
+          class="heart-icon"
           mat-icon-button
           (click)="
             isFavorite(movie)
@@ -40,6 +38,9 @@
       </mat-card-actions>
     </mat-dialog-content>
   </mat-card>
+  <button class="arrow prev" (click)="scroll(-1)" *ngIf="showLeftArrow">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
   <button class="arrow next" (click)="scroll(1)" *ngIf="showRightArrow">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
